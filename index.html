@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curiosidades de Blox Fruits</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+
+:root{
+  --deep-sea:#0a1e30;
+  --mid-sea:#0f3a4a;
+  --foam:#eae3d2;
+  --gold:#e3b23c;
+  --coral:#d9613f;
+  --leaf:#4f8a6b;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+
+body{
+  background: var(--deep-sea);
+  color: var(--foam);
+  font-family:'Inter',sans-serif;
+  overflow-x:hidden;
+}
+
+/* subtle water texture */
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(79,138,107,0.10), transparent 45%),
+    radial-gradient(ellipse at 80% 30%, rgba(227,178,60,0.06), transparent 40%);
+  pointer-events:none;
+  z-index:0;
+}
+
+.route-line{
+  position:absolute;
+  left:50%;
+  top:520px;
+  bottom:160px;
+  width:2px;
+  background-image: linear-gradient(var(--gold) 60%, transparent 0%);
+  background-size: 2px 14px;
+  background-repeat: repeat-y;
+  opacity:0.35;
+  transform: translateX(-50%);
+  z-index:0;
+}
+
+header{
+  position:relative;
+  z-index:1;
+  min-height:78vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:40px 20px 80px;
+  background:
+    linear-gradient(180deg, rgba(10,30,48,0) 0%, var(--deep-sea) 95%),
+    repeating-linear-gradient(180deg, transparent 0 38px, rgba(234,227,210,0.025) 38px 40px);
+}
+
+.eyebrow{
+  letter-spacing:0.35em;
+  text-transform:uppercase;
+  font-size:12px;
+  color:var(--gold);
+  font-weight:600;
+  margin-bottom:22px;
+}
+
+h1{
+  font-family:'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 10vw, 6.5rem);
+  line-height:0.95;
+  letter-spacing:0.01em;
+  color:var(--foam);
+  text-shadow: 0 0 40px rgba(227,178,60,0.25);
+}
+h1 span{ color:var(--gold); }
+
+header p{
+  max-width:520px;
+  margin-top:22px;
+  font-size:17px;
+  line-height:1.6;
+  color:#c9c2ae;
+}
+
+.wave{
+  margin-top:50px;
+  width:120px;
+  height:24px;
+  opacity:0.6;
+}
+
+main{
+  position:relative;
+  z-index:1;
+  max-width:760px;
+  margin:0 auto;
+  padding:0 24px 140px;
+}
+
+.island{
+  position:relative;
+  display:flex;
+  gap:22px;
+  margin-bottom:64px;
+  align-items:flex-start;
+}
+
+.island:nth-child(even){ flex-direction:row-reverse; text-align:right; }
+.island:nth-child(even) .marker{ order:1; }
+
+.marker{
+  flex:0 0 auto;
+  width:52px; height:52px;
+  border-radius:50%;
+  background: radial-gradient(circle at 35% 30%, var(--mid-sea), var(--deep-sea));
+  border:1.5px solid var(--gold);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:20px;
+  color:var(--gold);
+  box-shadow:0 0 0 6px var(--deep-sea);
+}
+
+.card{
+  background: linear-gradient(160deg, rgba(234,227,210,0.05), rgba(234,227,210,0.02));
+  border:1px solid rgba(227,178,60,0.18);
+  border-radius:14px;
+  padding:22px 24px;
+  flex:1;
+}
+
+.card h3{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.5rem;
+  letter-spacing:0.02em;
+  color:var(--foam);
+  margin-bottom:8px;
+}
+
+.card p{
+  font-size:15px;
+  line-height:1.65;
+  color:#c9c2ae;
+}
+
+.tag{
+  display:inline-block;
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  font-weight:700;
+  padding:3px 9px;
+  border-radius:20px;
+  margin-bottom:10px;
+}
+.tag.pirata{ background:rgba(217,97,63,0.18); color:var(--coral); }
+.tag.marine{ background:rgba(79,138,107,0.2); color:var(--leaf); }
+.tag.tesouro{ background:rgba(227,178,60,0.18); color:var(--gold); }
+
+/* fruit flip cards */
+.fruits{
+  position:relative; z-index:1;
+  max-width:960px; margin:0 auto 120px; padding:0 24px;
+}
+.fruits h2{
+  font-family:'Bebas Neue',sans-serif;
+  text-align:center;
+  font-size:2.4rem;
+  color:var(--gold);
+  margin-bottom:8px;
+  letter-spacing:0.02em;
+}
+.fruits .sub{
+  text-align:center;
+  color:#c9c2ae;
+  font-size:14px;
+  margin-bottom:44px;
+}
+
+.fruit-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
+  gap:20px;
+}
+
+.flip{
+  perspective:1000px;
+  height:190px;
+  cursor:pointer;
+}
+.flip-inner{
+  position:relative; width:100%; height:100%;
+  transition:transform 0.6s cubic-bezier(.4,.2,.2,1);
+  transform-style:preserve-3d;
+}
+.flip.on .flip-inner{ transform:rotateY(180deg); }
+
+.face{
+  position:absolute; inset:0;
+  backface-visibility:hidden;
+  border-radius:14px;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  text-align:center;
+  padding:18px;
+}
+.front{
+  background:radial-gradient(circle at 30% 20%, var(--mid-sea), var(--deep-sea));
+  border:1.5px solid rgba(227,178,60,0.4);
+}
+.front .emoji{ font-size:40px; margin-bottom:10px; }
+.front .name{ font-family:'Bebas Neue',sans-serif; font-size:1.3rem; color:var(--gold); letter-spacing:0.02em; }
+.front .hint{ font-size:11px; color:#9aa0a6; margin-top:6px; letter-spacing:0.08em; text-transform:uppercase; }
+
+.back{
+  background:linear-gradient(160deg, var(--coral), #b64a2c);
+  transform:rotateY(180deg);
+  font-size:13.5px; line-height:1.55; color:#fdf3ea;
+}
+
+footer{
+  position:relative; z-index:1;
+  text-align:center;
+  padding:40px 20px 60px;
+  color:#8b8471;
+  font-size:12.5px;
+  letter-spacing:0.04em;
+}
+
+@media (max-width:640px){
+  .island, .island:nth-child(even){ flex-direction:column; text-align:left; }
+  .route-line{ left:26px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Guia não-oficial de fã</div>
+  <h1>Curiosidades de<br><span>Blox Fruits</span></h1>
+  <p>Uma viagem pelas Grand Line do Roblox: a origem do jogo, os segredos das Frutas do Diabo e os poderes que fazem milhões de jogadores voltarem todos os dias.</p>
+  <svg class="wave" viewBox="0 0 120 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 12 Q 15 0, 30 12 T 60 12 T 90 12 T 120 12" stroke="#e3b23c" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+</header>
+
+<main>
+  <div class="route-line"></div>
+
+  <div class="island">
+    <div class="marker">01</div>
+    <div class="card">
+      <span class="tag tesouro">Origem</span>
+      <h3>Nasceu em 2019, dentro do próprio Roblox</h3>
+      <p>Blox Fruits foi criado em 2019 pelo desenvolvedor conhecido como mygame43, sob o estúdio Gamer Robot Inc. Começou como mais um modo dentro do Roblox e se tornou um dos jogos mais jogados de toda a plataforma.</p>
+    </div>
+  </div>
+
+  <div class="island">
+    <div class="marker">02</div>
+    <div class="card">
+      <span class="tag pirata">Inspiração</span>
+      <h3>Uma homenagem a One Piece</h3>
+      <p>Todo o universo do jogo é inspirado no anime e mangá One Piece: as Frutas do Diabo remetem às Akuma no Mi, e a estética de piratas, marinheiros e ilhas remotas vem direto do mundo criado por Eiichiro Oda.</p>
+    </div>
+  </div>
+
+  <div class="island">
+    <div class="marker">03</div>
+    <div class="card">
+      <span class="tag marine">Escolha</span>
+      <h3>Pirata ou Marinheiro: você decide</h3>
+      <p>Logo no início da jornada, o jogador escolhe um caminho: seguir como pirata em busca de tesouro e liberdade, ou como marinheiro a serviço da lei. Cada lado tem missões e recompensas próprias.</p>
+    </div>
+  </div>
+
+  <div class="island">
+    <div class="marker">04</div>
+    <div class="card">
+      <span class="tag tesouro">Poder</span>
+      <h3>Três formas de conseguir uma Fruta do Diabo</h3>
+      <p>Uma fruta pode ser encontrada dentro de baús espalhados pelo mapa, comprada diretamente na loja do jogo, ou negociada com outros jogadores em um comércio informal que virou quase uma economia própria.</p>
+    </div>
+  </div>
+
+  <div class="island">
+    <div class="marker">05</div>
+    <div class="card">
+      <span class="tag marine">Domínio</span>
+      <h3>O Haki é a evolução final do combate</h3>
+      <p>Depois de subir de nível, o jogador desbloqueia o Haki, dividido em três tipos: Observação (prevê ataques), Armamento (aumenta o dano e atinge usuários de Logia) e o raro Conquistador, que pode nocautear inimigos mais fracos apenas com presença.</p>
+    </div>
+  </div>
+
+  <div class="island">
+    <div class="marker">06</div>
+    <div class="card">
+      <span class="tag tesouro">Escala</span>
+      <h3>Bilhões de visitas e atualizações sem parar</h3>
+      <p>O jogo já acumulou bilhões de visitas dentro do Roblox. O segredo para se manter no topo é o fluxo constante de atualizações, com novas frutas, ilhas e eventos que renovam o interesse da comunidade antes que ela esfrie.</p>
+    </div>
+  </div>
+</main>
+
+<section class="fruits">
+  <h2>Tipos de Fruta do Diabo</h2>
+  <p class="sub">Clique em cada fruta para revelar o que ela faz</p>
+  <div class="fruit-grid">
+
+    <div class="flip" onclick="this.classList.toggle('on')">
+      <div class="flip-inner">
+        <div class="face front">
+          <div class="emoji">🍇</div>
+          <div class="name">Paramecia</div>
+          <div class="hint">toque para ver</div>
+        </div>
+        <div class="face back">Concede habilidades corporais únicas: manipular objetos, criar explosões, esticar ou transformar partes do corpo. É a categoria mais numerosa e variada do jogo.</div>
+      </div>
+    </div>
+
+    <div class="flip" onclick="this.classList.toggle('on')">
+      <div class="flip-inner">
+        <div class="face front">
+          <div class="emoji">🐉</div>
+          <div class="name">Zoan</div>
+          <div class="hint">toque para ver</div>
+        </div>
+        <div class="face back">Transforma o usuário total ou parcialmente em um animal ou criatura, ganhando força, velocidade ou resistência extra em troca de um estilo de combate mais físico.</div>
+      </div>
+    </div>
+
+    <div class="flip" onclick="this.classList.toggle('on')">
+      <div class="flip-inner">
+        <div class="face front">
+          <div class="emoji">⚡</div>
+          <div class="name">Logia</div>
+          <div class="hint">toque para ver</div>
+        </div>
+        <div class="face back">Transforma o corpo do usuário em um elemento natural, como fogo, gelo ou fumaça, permitindo escapar de ataques físicos comuns. É considerada a categoria mais poderosa e rara.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  Conteúdo não-oficial de fã · Blox Fruits pertence aos seus respectivos criadores no Roblox
+</footer>
+
+</body>
+</html>
